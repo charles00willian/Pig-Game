@@ -9,7 +9,7 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer, dice, gamePlaying;
+var scores, roundScore, activePlayer, dice, gamePlaying, numberPlays, lastPlay;
 
 init();
 
@@ -27,10 +27,14 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
         diceDOM.src = ('dice-' + dice + '.png');
 
         //3. Update the round score IF the rolled number was NOt a 1
-        if (dice !== 1) {
+
+        if (dice !== 1 && (lastPlay !== 6 || dice !== 6)) {
             //Add score
             roundScore += dice;
             document.querySelector('#current-' + activePlayer).textContent = roundScore;
+            lastPlay = dice;
+            console.log(lastPlay);
+
         } else {
             //Next player
             nextPlayer();
@@ -47,7 +51,7 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
         document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
         //Check if player won the game
-        if (scores[activePlayer] >= 100) {
+        if (scores[activePlayer] >= numberPlays) {
             document.querySelector('#name-' + activePlayer).textContent = "Winner!";
             document.querySelector('.dice').style.display = 'none';
 
@@ -63,11 +67,25 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
 
 document.querySelector('.btn-new').addEventListener('click', init);
 
+document.querySelector('.btn-input').addEventListener('click', function () {
+    numberPlays = document.querySelector('#input').value;
+
+    console.log(numberPlays);
+    if (numberPlays === "") {
+        numberPlays = 100;
+    }
+
+    document.getElementById('play').classList.add('hidden')
+});
+
 function init() {
     scores = [0, 0];
     activePlayer = 0;
     roundScore = 0;
     gamePlaying = true;
+    numberPlays = 100;
+
+    document.getElementById('play').classList.remove('hidden')
 
     document.getElementById('name-0').textContent = "Player 1";
     document.getElementById('name-1').textContent = "Player 2";
@@ -90,6 +108,7 @@ function init() {
 function nextPlayer() {
     activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
     roundScore = 0;
+    lastPlay = undefined;
 
     document.getElementById('current-0').textContent = '0';
     document.getElementById('current-1').textContent = '0';

@@ -176,3 +176,51 @@ i {
     font-weight: 300;
     color: #EB4D4D;
 }
+
+/************************************************
+*INPUT NUMBER OF PLAYS
+************************************************/
+.play-selector {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 200px;
+    width: 350px;
+    background-color: rgb(236, 52, 52);
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.play-lbl {
+    font-size: 33px;
+    font-weight: 300;
+    position: relative;
+    display: inline-block;
+    color: #222;
+    text-align: center;
+    margin: 20px 0 20px;
+    width: 100%;
+}
+
+.number-of-play {
+    position: relative;
+    margin-bottom: 20px;
+    height: 40px;
+    border: 3px solid #f7f7f7;
+    text-align: center;
+}
+
+.btn-input {
+    position: relative;
+    display: inline-block;
+    left: 0;
+    transform: translateX(0);
+    color: #222;
+    font-weight: 800;
+}
+
+.hidden {
+    display: none;
+}
