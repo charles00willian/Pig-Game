@@ -9,7 +9,7 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer, dice, gamePlaying, numberPlays, lastPlay;
+var scores, roundScore, activePlayer, dice0, dice1, gamePlaying, numberPlays, lastPlay;
 
 init();
 
@@ -17,26 +17,32 @@ init();
 document.querySelector('.btn-roll').addEventListener('click', function () {
     if (gamePlaying) {
         //1. Random number
-        dice = Math.floor(Math.random() * 6) + 1;
+        dice0 = Math.floor(Math.random() * 6) + 1;
+        dice1 = Math.floor(Math.random() * 6) + 1;
 
         //2. Display the result
 
-        var diceDOM = document.querySelector('.dice');
-        document.querySelector('.dice').style.display = 'block';
-        diceDOM.style.display = "block";
-        diceDOM.src = ('dice-' + dice + '.png');
+        var diceDOM0 = document.querySelector('.dice-0');
+        document.querySelector('.dice-0').style.display = 'block';
+        diceDOM0.style.display = "block";
+        diceDOM0.src = ('dice-' + dice0 + '.png');
+
+        var diceDOM1 = document.querySelector('.dice-1');
+        document.querySelector('.dice-1').style.display = 'block';
+        diceDOM0.style.display = "block";
+        diceDOM1.src = ('dice-' + dice1 + '.png');
 
         //3. Update the round score IF the rolled number was NOt a 1
 
-        if (dice !== 1 && (lastPlay !== 6 || dice !== 6)) {
+        if (dice0 !== 1 && dice1 !== 1 && (dice0 !== 6 || dice1 !== 6)) {
             //Add score
-            roundScore += dice;
+
+            roundScore += (dice0 + dice1);
             document.querySelector('#current-' + activePlayer).textContent = roundScore;
-            lastPlay = dice;
-            console.log(lastPlay);
 
         } else {
             //Next player
+            console.log(dice0, dice1)
             nextPlayer();
         }
     }
@@ -53,7 +59,8 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
         //Check if player won the game
         if (scores[activePlayer] >= numberPlays) {
             document.querySelector('#name-' + activePlayer).textContent = "Winner!";
-            document.querySelector('.dice').style.display = 'none';
+            document.querySelector('.dice-0').style.display = 'none';
+            document.querySelector('.dice-1').style.display = 'none';
 
             document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
             document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
@@ -90,7 +97,8 @@ function init() {
     document.getElementById('name-0').textContent = "Player 1";
     document.getElementById('name-1').textContent = "Player 2";
 
-    document.querySelector('.dice').style.display = 'none';
+    document.querySelector('.dice-0').style.display = 'none';
+    document.querySelector('.dice-1').style.display = 'none';
 
     document.getElementById("score-0").textContent = '0';
     document.getElementById("score-1").textContent = '0';
@@ -119,7 +127,8 @@ function nextPlayer() {
     //document.querySelector('.player-0-panel').classList.remove('active');
     //document.querySelector('.player-1-panel').classList.add('active');
 
-    document.querySelector('.dice').style.display = 'none';
+    document.querySelector('.dice-0').style.display = 'none';
+    document.querySelector('.dice-1').style.display = 'none';
 }
 //document.querySelector('#current-' + activePlayer).textContent = dice;
 /* Another way to write things in HTML
